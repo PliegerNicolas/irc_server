@@ -6,7 +6,7 @@
 /*   By: nicolas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 11:24:11 by nicolas           #+#    #+#             */
-/*   Updated: 2024/01/06 14:32:27 by nicolas          ###   ########.fr       */
+/*   Updated: 2024/01/06 14:59:44 by nicolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,30 @@ void	Server::processEvents(struct epoll_event *events, const int &numEvents)
 	}
 }
 
+void	Server::addClient(void)
+{
+	try
+	{
+		//SocketInfo	*a = this->acceptConnection();
+		//(void)a;
+		std::cout << "Added client" << std::endl;
+	}
+	catch (const std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+}
+
+void	Server::removeClient(const int &clientFd)
+{
+	std::cout << "Removed client" << std::endl;
+	(void)clientFd;
+}
+
+/* ************************************************************************** */
+/* *                                  EPOLL                                 * */
+/* ************************************************************************** */
+
 void	Server::addToEpoll(const int &fd, const uint32_t &events)
 {
 	if (fd == -1)
@@ -228,15 +252,4 @@ void	Server::deleteFromEpoll(const int &fd)
 	if (epoll_ctl(_epollFd, EPOLL_CTL_DEL, fd, nullptr) == -1)
 		throw std::runtime_error("Error: Server - couldn't remove fd from epoll. "
 			+ std::string(strerror(errno)));
-}
-
-void	Server::addClient(void)
-{
-	std::cout << "Added client" << std::endl;
-}
-
-void	Server::removeClient(const int &clientFd)
-{
-	std::cout << "Removed client" << std::endl;
-	(void)clientFd;
 }

@@ -6,7 +6,7 @@
 /*   By: nicolas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 13:18:14 by nicolas           #+#    #+#             */
-/*   Updated: 2024/01/06 14:01:28 by nicolas          ###   ########.fr       */
+/*   Updated: 2024/01/06 14:47:08 by nicolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,8 @@ void		Sockets::listenForConnections(const int &backlog)
 	}
 }
 
-/*
+# include <iostream>
+
 SocketInfo	*Sockets::acceptConnection(void)
 {
 	for (auto &socketInfoPair : _mySockets)
@@ -132,7 +133,6 @@ SocketInfo	*Sockets::acceptConnection(void)
 	throw std::runtime_error("Error: Sockets - couldn't accept connection. "
 		+ std::string(strerror(errno)));
 }
-*/
 
 void	Sockets::setSocketsOption(int level, int option, int value)
 {

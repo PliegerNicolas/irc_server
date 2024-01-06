@@ -6,7 +6,7 @@
 /*   By: nicolas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 11:22:09 by nicolas           #+#    #+#             */
-/*   Updated: 2024/01/06 14:24:59 by nicolas          ###   ########.fr       */
+/*   Updated: 2024/01/06 15:01:17 by nicolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,14 @@ class Server: public Sockets
 	private:
 		/* TYPEDEFS */
 
+		typedef std::map<int, SocketInfo>	Clients;
+
 		/* ATTRIBUTES */
 
-		int					_epollFd;
+		int				_epollFd;
+		ThreadPool		_threadPool;
 
-		ThreadPool			_threadPool;
+		Clients			_clients;
 
 		/* CONSTRUCTORS & DESTRUCTORS */
 

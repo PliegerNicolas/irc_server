@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Sockets.hpp                                        :+:      :+:    :+:   */
+/*   ATarget.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nicolas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/06 12:58:52 by nicolas           #+#    #+#             */
-/*   Updated: 2024/01/06 14:42:25 by nicolas          ###   ########.fr       */
+/*   Created: 2024/01/06 14:35:56 by nicolas           #+#    #+#             */
+/*   Updated: 2024/01/06 14:36:49 by nicolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SOCKETS_HPP
-# define SOCKETS_HPP
+#ifndef ATARGET_HPP
+# define ATARGET_HPP
 
 // INCLUDES
-
-# include "sockets/SocketInfo.hpp"
-
-# include <vector>
-# include <map>
 
 // MACROS
 
 // FORWARD DECLARATIONS
 
-class Sockets
+class ATarget
 {
 	public:
 		/* TYPEDEFS */
@@ -33,14 +28,14 @@ class Sockets
 
 		/* CONSTRUCTORS & DESTRUCTORS */
 
-		Sockets(void);
+		ATarget(void);
 
-		Sockets(const Sockets &other);
-		Sockets &operator=(const Sockets &other);
-		Sockets(Sockets &&other) noexcept;
-		Sockets &operator=(Sockets &&other) noexcept;
+		ATarget(const ATarget &other);
+		ATarget &operator=(const ATarget &other);
+		ATarget(ATarget &&other) noexcept;
+		ATarget &operator=(ATarget &&other) noexcept;
 
-		virtual ~Sockets(void);
+		virtual ~ATarget(void);
 
 		/* GETTERS */
 
@@ -51,12 +46,7 @@ class Sockets
 	protected:
 		/* TYPEDEFS */
 
-		typedef std::map<int, SocketInfo>	SocketsList;
-
 		/* ATTRIBUTES */
-
-		SocketsList		_mySockets;
-		SocketsList		_peerSockets;
 
 		/* CONSTRUCTORS & DESTRUCTORS */
 
@@ -65,14 +55,6 @@ class Sockets
 		/* SETTERS */
 
 		/* MEMBER FUNCTIONS */
-
-		void		initialize(const SocketInfo::Params &params);
-		void		bindToRoutingPoint(void);
-		void		listenForConnections(const int &backlog);
-		SocketInfo	*acceptConnection(void);
-
-		void		setSocketsOption(int level, int option, int value);
-		void		setFileDescriptorsOption(int level, int option);
 
 	private:
 		/* TYPEDEFS */
@@ -88,4 +70,4 @@ class Sockets
 		/* MEMBER FUNCTIONS */
 };
 
-#endif // SOCKETS_HPP
+#endif // ATARGET_HPP
