@@ -6,7 +6,7 @@
 /*   By: nicolas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 11:22:09 by nicolas           #+#    #+#             */
-/*   Updated: 2024/01/06 13:42:49 by nicolas          ###   ########.fr       */
+/*   Updated: 2024/01/06 14:11:03 by nicolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,10 @@ class Server: public Sockets
 		/* SETTERS */
 
 		/* MEMBER FUNCTIONS */
+
+		void	addToEpoll(const int &fd, const uint32_t &events);
+		void	updateInEpoll(const int &fd, const uint32_t &events);
+		void	deleteFromEpoll(const int &fd);
 };
 
 #endif // SERVER_HPP

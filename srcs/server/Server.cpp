@@ -6,7 +6,7 @@
 /*   By: nicolas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 11:24:11 by nicolas           #+#    #+#             */
-/*   Updated: 2024/01/06 14:01:48 by nicolas          ###   ########.fr       */
+/*   Updated: 2024/01/06 14:15:53 by nicolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ Server::Server(const SocketInfo::Params &params):
 
 	Sockets::bindToRoutingPoint();
 	Sockets::listenForConnections(SOMAXCONN);
+
+	for (const auto &socket: _mySockets)
+		addToEpoll(socket.second.fd, EPOLLIN | EPOLLOUT | EPOLLHUP
+			| EPOLLRDHUP | EPOLLERR | EPOLLET);
 }
 
 Server::Server(const Server &other):
@@ -133,3 +137,44 @@ void	Server::launch(void)
 /* SETTERS */
 
 /* MEMBER FUNCTIONS */
+
+void	Server::addToEpoll(const int &fd, const uint32_t &events)
+{
+	if (fd == -1)
+		throw std::runtime_error("Error: Server - trying to add an invalid fd to epoll. "
+			+ std::string(strerror(errno)));
+
+	struct epoll_event	event;
+	event.events = events;
+	event.data.fd = fd;
+
+	if (epoll_ctl(_epollFd, EPOLL_CTL_ADD, fd, &event) == -1)
+		throw std::runtime_error("Error: Server - couldn't add fd to epoll. "
+			+ std::string(strerror(errno)));
+}
+
+void	Server::updateInEpoll(const int &fd, const uint32_t &events)
+{
+	if (fd == -1)
+		throw std::runtime_error("Error: Server - trying to update an invalid fd to epoll. "
+			+ std::string(strerror(errno)));
+
+	struct epoll_event	event;
+	event.events = events;
+	event.data.fd = fd;
+
+	if (epoll_ctl(_epollFd, EPOLL_CTL_MOD, fd, &event) == -1)
+		throw std::runtime_error("Error: Server - couldn't update fd in epoll. "
+			+ std::string(strerror(errno)));
+}
+
+void	Server::deleteFromEpoll(const int &fd)
+{
+	if (fd == -1)
+		throw std::runtime_error("Error: Server - trying to remove an invalid fd to epoll. "
+			+ std::string(strerror(errno)));
+
+	if (epoll_ctl(_epollFd, EPOLL_CTL_DEL, fd, nullptr) == -1)
+		throw std::runtime_error("Error: Server - couldn't remove fd from epoll. "
+			+ std::string(strerror(errno)));
+}
