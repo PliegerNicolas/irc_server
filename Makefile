@@ -6,7 +6,7 @@
 #    By: nicolas <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/17 21:31:44 by nicolas           #+#    #+#              #
-#    Updated: 2024/01/05 14:54:09 by nicolas          ###   ########.fr        #
+#    Updated: 2024/01/06 13:08:14 by nicolas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,10 @@ SOURCES_EXTENSION		=			.cpp
 SOURCES_PATH			=			srcs
 
 SOURCES_NAMES			:=			main \
+									sockets/Sockets \
+									sockets/SocketInfo \
 									threadpool/ThreadPool \
+									server/Server \
 
 SOURCES					:=			$(addsuffix $(SOURCES_EXTENSION), $(SOURCES_NAMES))
 
