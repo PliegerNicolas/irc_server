@@ -6,7 +6,7 @@
 /*   By: nicolas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 11:22:09 by nicolas           #+#    #+#             */
-/*   Updated: 2024/01/06 14:11:03 by nicolas          ###   ########.fr       */
+/*   Updated: 2024/01/06 14:24:59 by nicolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 
 # include "sockets/Sockets.hpp"
 # include "threadpool/ThreadPool.hpp"
+
+# include <iostream>
 
 # include <unistd.h>
 # include <sys/epoll.h>
@@ -85,6 +87,11 @@ class Server: public Sockets
 		/* SETTERS */
 
 		/* MEMBER FUNCTIONS */
+
+		void	processEvents(struct epoll_event *events, const int &numEvents);
+
+		void	addClient(void);
+		void	removeClient(const int &clientFd);
 
 		void	addToEpoll(const int &fd, const uint32_t &events);
 		void	updateInEpoll(const int &fd, const uint32_t &events);
