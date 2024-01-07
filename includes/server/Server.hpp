@@ -6,7 +6,7 @@
 /*   By: nicolas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 11:22:09 by nicolas           #+#    #+#             */
-/*   Updated: 2024/01/06 15:01:17 by nicolas          ###   ########.fr       */
+/*   Updated: 2024/01/07 18:46:41 by nicolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 // MACROS
 
 # define MAX_EVENTS 150
-# define NUM_THREADS 5
+# define NUM_THREADS 1
 
 // FORWARD DECLARATIONS
 
@@ -72,7 +72,7 @@ class Server: public Sockets
 	private:
 		/* TYPEDEFS */
 
-		typedef std::map<int, SocketInfo>	Clients;
+		typedef std::map<int, SocketInfo*>	Clients;
 
 		/* ATTRIBUTES */
 

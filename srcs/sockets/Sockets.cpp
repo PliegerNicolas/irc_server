@@ -6,7 +6,7 @@
 /*   By: nicolas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 13:18:14 by nicolas           #+#    #+#             */
-/*   Updated: 2024/01/06 14:47:08 by nicolas          ###   ########.fr       */
+/*   Updated: 2024/01/07 18:42:57 by nicolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,6 @@ void		Sockets::listenForConnections(const int &backlog)
 				+ std::string(strerror(errno)));
 	}
 }
-
-# include <iostream>
 
 SocketInfo	*Sockets::acceptConnection(void)
 {

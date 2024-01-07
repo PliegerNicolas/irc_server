@@ -6,7 +6,7 @@
 /*   By: nicolas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 11:24:11 by nicolas           #+#    #+#             */
-/*   Updated: 2024/01/06 14:59:44 by nicolas          ###   ########.fr       */
+/*   Updated: 2024/01/07 18:47:51 by nicolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,13 @@ void	Server::launch(void)
 
 /* MEMBER FUNCTIONS */
 
+/*
+static bool isFdOpen(int fd)	// temp
+{
+	return (fcntl(fd, F_GETFD) != -1 || errno != EBADF);
+}
+*/
+
 void	Server::processEvents(struct epoll_event *events, const int &numEvents)
 {
 	for (int i = 0; i < numEvents; ++i)
@@ -193,9 +200,12 @@ void	Server::addClient(void)
 {
 	try
 	{
-		//SocketInfo	*a = this->acceptConnection();
-		//(void)a;
-		std::cout << "Added client" << std::endl;
+		SocketInfo	*si = this->acceptConnection();
+
+		_clients.emplace(si->fd, si);
+		addToEpoll(si->fd, EPOLLIN | EPOLLOUT | EPOLLHUP | EPOLLRDHUP | EPOLLERR | EPOLLET);
+
+		std::cout << "Added client (" << si->fd << ")" << std::endl;
 	}
 	catch (const std::exception &e)
 	{
@@ -205,8 +215,14 @@ void	Server::addClient(void)
 
 void	Server::removeClient(const int &clientFd)
 {
-	std::cout << "Removed client" << std::endl;
-	(void)clientFd;
+	if (_clients.find(clientFd) != _clients.end())
+	{
+		deleteFromEpoll(clientFd);
+		_clients.erase(clientFd);
+		std::cout << "Removed client (" << clientFd << ")" << std::endl;
+	}
+	if (_peerSockets.find(clientFd) != _peerSockets.end())
+		_peerSockets.erase(clientFd);
 }
 
 /* ************************************************************************** */
