@@ -1,3 +1,6 @@
+# THIS IS AN UNFINISHED PROJECT
+
+but a good start to make a c++11 thread-pool managed IRC server.
 
 # IRC server
 
